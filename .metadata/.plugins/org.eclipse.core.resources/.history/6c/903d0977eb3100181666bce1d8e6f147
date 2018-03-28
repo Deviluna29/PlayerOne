@@ -1,0 +1,94 @@
+package Tetris;
+
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferStrategy;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+
+public class TetrisMain extends Canvas implements Runnable, KeyListener {
+
+	// Used to set the Width and Height of the game's screen
+	public static final int WIDTH = 400, HEIGHT = 565;
+	
+	public static void main(String[] args) {
+		// Set the game's screen
+		JFrame frame = new JFrame("Tetris");
+		frame.setSize(WIDTH, HEIGHT);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+		frame.setResizable(false);
+		frame.setLayout(null);
+		JMenu bar = new JMenu();
+		bar.setBounds(0, 0, WIDTH, 25);
+		// Initialize the game's screen
+		TetrisMain tm = new TetrisMain();
+		tm.setBounds(0, 25, WIDTH, HEIGHT - 25);
+		frame.add(tm);
+		frame.add(bar);
+		frame.setVisible(true);
+		tm.start();
+	}
+	
+	public void start() {
+		// Start a new Thread
+		Thread t = new Thread(this);
+		t.setPriority(Thread.MAX_PRIORITY);
+		t.start();
+	}
+
+	@Override
+	public void run() {		
+		boolean running = true;
+		while (running){
+			update();
+			BufferStrategy buf = getBufferStrategy();
+			if (buf == null){
+				createBufferStrategy(3);
+				continue;
+			}
+			Graphics2D g = (Graphics2D) buf.getDrawGraphics();
+			render(g);
+			buf.show();
+		}
+		
+	}	
+
+	private void update() {
+		
+		
+	}
+	
+	private void render(Graphics2D g) {
+		// Set the background color and other stuff like a Title
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Calibri", Font.PLAIN, 20));
+		g.drawString("Tetris", 170, 50);
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

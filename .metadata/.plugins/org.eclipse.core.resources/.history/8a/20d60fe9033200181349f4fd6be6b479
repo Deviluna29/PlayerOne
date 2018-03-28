@@ -1,0 +1,17 @@
+package Tetris;
+
+import javax.swing.JFrame;
+
+public class Config {
+	
+	public static int rotate, left, right, down, pause;
+	
+	public static void openConfig(JFrame frame){
+		JFrame options = new JFrame("Options");
+		options.setSize(400, 300);
+		options.setResizable(false);
+		options.setLocationRelativeTo(frame);
+		options.setVisible(true);
+	}
+	
+}

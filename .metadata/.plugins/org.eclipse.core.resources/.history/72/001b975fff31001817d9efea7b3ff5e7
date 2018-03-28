@@ -1,0 +1,13 @@
+package Tetris;
+
+import java.util.HashMap;
+
+public class KeyGetter {
+	
+	private static HashMap<Integer, String> keys;
+	
+	public static void loadKeys(){
+		keys = new HashMap<Integer, String>;
+		
+	}
+}
