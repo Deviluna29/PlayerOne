@@ -23,7 +23,6 @@ public class KeyGetter {
 						String name = KeyEvent.getKeyText(num);
 						keys.put(name, num);
 						keyNames.add(name);
-						System.out.println(name);
 					} catch(Exception e){
 						e.printStackTrace();
 					}					

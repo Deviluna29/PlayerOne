@@ -4,7 +4,6 @@ import java.awt.Choice;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,27 +36,50 @@ public class Config {
 		Choice pause = addChoice("Pause", options, 30, 130);
 		pause.select(Config.pause);
 		JButton done = new JButton("Done");
-		done.setBounds(150, 200, 100, 30);
+		done.setBounds(75, 200, 100, 30);
 		done.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				options.dispose();
 				saveChanges();				
 			}
 		});
+		JButton reinit = new JButton("Default");
+		reinit.setBounds(225, 200, 100, 30);
+		reinit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){				
+				try {
+					setDefaultConfig();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				options.dispose();
+				openConfig(frame);
+			}
+		});
 		options.add(done);
+		options.add(reinit);
 		options.setVisible(true);
+	}
+	
+	public static void setDefaultConfig() throws Exception{
+		Config.left = "Gauche";
+		Config.right = "Droite";
+		Config.rotate = "Haut";
+		Config.down = "Bas";
+		Config.pause = "P";
+		saveConfig();
 	}
 	
 	public static void saveChanges(){
 		Choice left = choices.get(0);
 		Choice right = choices.get(1);
-		Choice down = choices.get(2);
-		Choice rotate = choices.get(3);
+		Choice rotate = choices.get(2);
+		Choice down = choices.get(3);		
 		Choice pause = choices.get(4);
 		Config.left = left.getSelectedItem();
 		Config.right = right.getSelectedItem();
-		Config.down = down.getSelectedItem();
 		Config.rotate = rotate.getSelectedItem();
+		Config.down = down.getSelectedItem();		
 		Config.pause = pause.getSelectedItem();
 		try{
 			saveConfig();
@@ -111,6 +133,7 @@ public class Config {
 			String value = entry[1];
 			values.put(key, value);
 		}
+		s.close();
 		if(values.size() != 5){
 			System.out.println("Config is unnusable, saving defaults");
 			saveConfig();
