@@ -16,19 +16,30 @@ public class Controller implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if(KeyEvent.getKeyText(e.getKeyCode()).equals(Config.left)){
 			left = true;
-			Action.moveShape(Config.left);
+			if (TetrisMain.running){
+				Action.moveShape(Config.left);
+			}			
 		}
 		else if(KeyEvent.getKeyText(e.getKeyCode()).equals(Config.right)){
 			right = true;
-			Action.moveShape(Config.right);
+			if (TetrisMain.running){
+				Action.moveShape(Config.right);
+			}
+			
 		}
 		else if(KeyEvent.getKeyText(e.getKeyCode()).equals(Config.rotate)){
 			rotate = true;
-			Action.moveShape(Config.rotate);
+			if (TetrisMain.running){
+				Action.moveShape(Config.rotate);
+			}
+			
 		}
 		else if(KeyEvent.getKeyText(e.getKeyCode()).equals(Config.down)){
 			down = true;
-			Action.moveShape(Config.down);
+			if (TetrisMain.running){
+				Action.moveShape(Config.down);
+			}
+			
 		}
 		else if(KeyEvent.getKeyText(e.getKeyCode()).equals(Config.pause)){
 			pause = true;

@@ -54,6 +54,10 @@ public class TetrisGrid {
 		}
 		return rowsRemoved;
 	}
+	
+	public static void checkForGameOver() {		
+			TetrisMain.runnable = false;				
+	}
 
 	private static void removeRow(int row) {
 		for (int x = 0; x < width; x++) {

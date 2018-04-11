@@ -95,6 +95,10 @@ public class Action {
 		boolean detectEdgeLeft = detectEdgeLeft(TetrisGrid.grid, TetrisGrid.gridShape);
 		boolean detectEdgeRight = detectEdgeRight(TetrisGrid.grid, TetrisGrid.gridShape);
 		boolean detectCollision = detectCollision(TetrisGrid.grid, TetrisGrid.gridShape);
+		
+		if (detectEdgeLeft && detectEdgeRight && detectCollision && index_weight_shape == 3 && index_height_shape == 0) {
+			TetrisGrid.checkForGameOver();
+		}
 
 		if (key.equals(Config.down)) {
 			if (detectCollision) {

@@ -18,20 +18,21 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 public class TetrisMain extends Canvas implements Runnable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	// Used to set the Width and Height of the game's screen
 	public static final int WIDTH = 405, HEIGHT = 629;
 	public static final int WIDTH_GRID = 250, HEIGHT_GRID = 550;
 
-	private Image[] tetrisBlocks;
+	private static Image[] tetrisBlocks;
 
 	Controller control;
-	
-	private TetrisGrid tetrisGrid;
-	
+
+	private static TetrisGrid tetrisGrid;
+
 	public static boolean running = true;
+	public static boolean runnable = true;
 
 	public static void main(String[] args) {
 		// Set the game's screen
@@ -59,6 +60,7 @@ public class TetrisMain extends Canvas implements Runnable {
 			public void actionPerformed(ActionEvent e) {
 				// Code for new game
 				System.out.println("Starting New Game...");
+				newGame();
 			}
 		});
 
@@ -116,38 +118,37 @@ public class TetrisMain extends Canvas implements Runnable {
 		bar.add(file);
 		frame.add(bar);
 		frame.setVisible(true);
-		tm.start();	
-		
+		tm.start();
+
 	}
 
 	public void start() {
 		// Start a new Thread
 		Thread t = new Thread(this);
-//		t.setPriority(Thread.MAX_PRIORITY);
+		// t.setPriority(Thread.MAX_PRIORITY);
 		t.start();
 	}
 
 	@Override
 	public void run() {
 		init();
-		
+
 		Bot bot = new Bot();
 		Thread t = new Thread(bot);
-		t.start();	
-		boolean runnable = true;
-		while (runnable) {			
-				BufferStrategy buf = getBufferStrategy();
+		t.start();
+		while (runnable) {
+			BufferStrategy buf = getBufferStrategy();
 			if (buf == null) {
 				createBufferStrategy(3);
 				continue;
 			}
 			Graphics2D g = (Graphics2D) buf.getDrawGraphics();
 			render(g);
-			buf.show();					
+			buf.show();
 		}
 
 	}
-
+	
 	public void init() {
 		control = new Controller(this);
 		this.addKeyListener(control);
@@ -159,7 +160,11 @@ public class TetrisMain extends Canvas implements Runnable {
 			System.exit(1);
 		}
 		tetrisGrid = new TetrisGrid(WIDTH_GRID, HEIGHT_GRID, 0, 25, tetrisBlocks);
-	}	
+	}
+	
+	public static void newGame() {
+		tetrisGrid = new TetrisGrid(WIDTH_GRID, HEIGHT_GRID, 0, 25, tetrisBlocks);
+	}
 
 	private void render(Graphics2D g) {
 		// Set the background color and other stuff like a Title
@@ -170,9 +175,9 @@ public class TetrisMain extends Canvas implements Runnable {
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
 		g.drawString("Tetris", 170, 20);
-//		g.setColor(Color.BLACK);
-//		g.setFont(new Font("Calibri", Font.PLAIN, 20));
-//		g.drawString(String.valueOf(Action.score), 300, 20);
-		tetrisGrid.drawGrid(g);		
+		// g.setColor(Color.BLACK);
+		// g.setFont(new Font("Calibri", Font.PLAIN, 20));
+		// g.drawString(String.valueOf(Action.score), 300, 20);
+		tetrisGrid.drawGrid(g);
 	}
 }
