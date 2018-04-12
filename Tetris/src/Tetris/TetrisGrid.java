@@ -9,10 +9,11 @@ public class TetrisGrid {
 	// -1 means empty, 0-6 is draw a block
 	public static int[][] grid;
 	public static int[][] gridShape;
+	public static int[][] gridView;
 	public static int[][] gridRotation;
-	
+
 	private int SQUARE_SIZE = 25;
-	private Image[] tetrisBlocks;	
+	private Image[] tetrisBlocks;
 
 	public TetrisGrid(int width, int height, int wOff, int hOff, Image[] blocks) {
 
@@ -22,6 +23,7 @@ public class TetrisGrid {
 		TetrisGrid.height = height / SQUARE_SIZE;
 		grid = new int[TetrisGrid.width][TetrisGrid.height];
 		gridShape = new int[TetrisGrid.width][TetrisGrid.height];
+		gridView = new int[4][4];
 		gridRotation = new int[TetrisGrid.width][TetrisGrid.height];
 		for (int x = 0; x < TetrisGrid.width; x++) {
 			for (int y = 0; y < TetrisGrid.height; y++) {
@@ -30,7 +32,13 @@ public class TetrisGrid {
 				gridRotation[x][y] = -1;
 			}
 		}
-		
+
+		for (int x = 0; x < 4; x++) {
+			for (int y = 0; y < 4; y++) {
+				gridView[x][y] = -1;
+			}
+		}
+
 		Action.invocShape(gridShape);
 
 		// int rowsRemoved = checkForRemoval();
@@ -54,9 +62,9 @@ public class TetrisGrid {
 		}
 		return rowsRemoved;
 	}
-	
-	public static void checkForGameOver() {		
-			TetrisMain.runnable = false;				
+
+	public static void checkForGameOver() {
+		TetrisMain.runnable = false;
 	}
 
 	private static void removeRow(int row) {
@@ -76,9 +84,20 @@ public class TetrisGrid {
 			for (int y = 0; y < height; y++) {
 				if (grid[x][y] != -1) {
 					g.drawImage(tetrisBlocks[grid[x][y]], widthOff + x * SQUARE_SIZE, heightOff + y * SQUARE_SIZE,
-							SQUARE_SIZE, SQUARE_SIZE, null);					
-				} else if (gridShape[x][y] != -1){
+							SQUARE_SIZE, SQUARE_SIZE, null);
+				} else if (gridShape[x][y] != -1) {
 					g.drawImage(tetrisBlocks[gridShape[x][y]], widthOff + x * SQUARE_SIZE, heightOff + y * SQUARE_SIZE,
+							SQUARE_SIZE, SQUARE_SIZE, null);
+				}
+			}
+		}
+	}
+
+	public void drawGridView(Graphics2D g) {
+		for (int x = 0; x < 4; x++) {
+			for (int y = 0; y < 4; y++) {
+				if (gridView[x][y] != -1) {
+					g.drawImage(tetrisBlocks[gridView[x][y]], 255 + x * SQUARE_SIZE, 30 + y * SQUARE_SIZE,
 							SQUARE_SIZE, SQUARE_SIZE, null);
 				}
 			}

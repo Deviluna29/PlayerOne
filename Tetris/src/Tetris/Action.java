@@ -4,24 +4,33 @@ import java.util.Random;
 
 public class Action {
 
+	private static Random random = new Random();
+	
 	public static int index_weight_shape;
 	public static int index_height_shape;
 	public static int shapeNumber;
+	public static int shapeNumberAfter = random.nextInt(6);;
+	
 	public static int defaultState;
 	public static int colorIndex;
+	public static int defaultStateAfter;
+	public static int colorIndexAfter;
+	
 	public static int score = 0;
 
 	public static ShapeData[] shapes = new ShapeData[7];
 
 	public static void invocShape(int[][] grid) {
 
+		resetGridView();
+		
 		index_weight_shape = 3;
 		index_height_shape = 0;
 		int rowsRemoved = TetrisGrid.checkForRemoval();
 		score += rowsRemoved;
 
-		Random random = new Random();
-		shapeNumber = random.nextInt(6);
+		shapeNumber = shapeNumberAfter;
+		shapeNumberAfter = random.nextInt(6);
 
 		shapes[0] = ShapeData.line;
 		shapes[1] = ShapeData.square;
@@ -36,10 +45,23 @@ public class Action {
 		defaultState = newShape.defaultState;
 		colorIndex = newShape.colorIndex;
 
+		ShapeData shapeAfter = shapes[shapeNumberAfter];
+
+		defaultStateAfter = shapeAfter.defaultState;
+		colorIndexAfter = shapeAfter.colorIndex;
+		
 		for (int x = 0; x < 4; x++) {
 			for (int y = 0; y < 4; y++) {
 				if (newShape.rotationStates[defaultState][x][y] == true) {
 					grid[3 + x][y] = colorIndex;
+				}
+			}
+		}
+		
+		for (int x = 0; x < 4; x++) {
+			for (int y = 0; y < 4; y++) {
+				if (shapeAfter.rotationStates[defaultStateAfter][x][y] == true) {
+					TetrisGrid.gridView[x][y] = colorIndexAfter;
 				}
 			}
 		}
@@ -205,6 +227,14 @@ public class Action {
 			}
 		}
 		invocShape(TetrisGrid.gridShape);
+	}
+	
+	public static void resetGridView() {
+		for (int x = 0; x < 4; x++){
+			for (int y = 0; y < 4; y++){
+				TetrisGrid.gridView[x][y] = -1;
+			}
+		}
 	}
 	
 	public static void pauseGame(){

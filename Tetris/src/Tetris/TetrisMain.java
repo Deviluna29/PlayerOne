@@ -164,20 +164,25 @@ public class TetrisMain extends Canvas implements Runnable {
 	
 	public static void newGame() {
 		tetrisGrid = new TetrisGrid(WIDTH_GRID, HEIGHT_GRID, 0, 25, tetrisBlocks);
+		Action.score = 0;
 	}
 
 	private void render(Graphics2D g) {
 		// Set the background color and other stuff like a Title
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, WIDTH, 25);		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 25, WIDTH_GRID, HEIGHT_GRID);
 		g.setColor(Color.GRAY);
-		g.fillRect(WIDTH_GRID, 25, WIDTH - WIDTH_GRID, HEIGHT_GRID);
+		g.fillRect(WIDTH_GRID, 25, WIDTH - WIDTH_GRID, HEIGHT_GRID);		
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
 		g.drawString("Tetris", 170, 20);
-		// g.setColor(Color.BLACK);
-		// g.setFont(new Font("Calibri", Font.PLAIN, 20));
-		// g.drawString(String.valueOf(Action.score), 300, 20);
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Calibri", Font.PLAIN, 20));
+		g.drawString(String.valueOf(Action.score), 300, 20);
 		tetrisGrid.drawGrid(g);
+		tetrisGrid.drawGridView(g);
+		
 	}
 }
