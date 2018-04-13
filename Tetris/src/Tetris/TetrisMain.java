@@ -180,7 +180,13 @@ public class TetrisMain extends Canvas implements Runnable {
 		g.drawString("Tetris", 170, 20);
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
-		g.drawString(String.valueOf(Action.score), 300, 20);
+		g.drawString("Score: " + String.valueOf(Action.score), 300, 20);
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Calibri", Font.PLAIN, 20));
+		g.drawString("Level: " + String.valueOf(Scoring.level), 300, 120);
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Calibri", Font.PLAIN, 20));
+		g.drawString("Lignes : " + String.valueOf(Action.totalRowsRemoved), 300, 150);
 		tetrisGrid.drawGrid(g);
 		tetrisGrid.drawGridView(g);
 		

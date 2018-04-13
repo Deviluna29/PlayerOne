@@ -17,6 +17,7 @@ public class Action {
 	public static int colorIndexAfter;
 	
 	public static int score = 0;
+	public static int totalRowsRemoved = 0;
 
 	public static ShapeData[] shapes = new ShapeData[7];
 
@@ -26,8 +27,11 @@ public class Action {
 		
 		index_weight_shape = 3;
 		index_height_shape = 0;
+		
 		int rowsRemoved = TetrisGrid.checkForRemoval();
-		score += rowsRemoved;
+		totalRowsRemoved += rowsRemoved;
+		score += Scoring.calculScore(rowsRemoved);
+		Scoring.calculLevel(totalRowsRemoved);
 
 		shapeNumber = shapeNumberAfter;
 		shapeNumberAfter = random.nextInt(6);
