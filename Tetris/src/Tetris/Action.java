@@ -31,6 +31,10 @@ public class Action {
 
 		int rowsRemoved = TetrisGrid.checkForRemoval();
 		
+		if (Controller.down) {
+			Controller.keyDownReleasedOneTime = false;
+		}
+		
 		if (rowsRemoved == 4){
 			tetrisMade++;
 		}

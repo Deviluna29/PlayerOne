@@ -6,7 +6,9 @@ import java.awt.event.KeyListener;
 public class Controller implements KeyListener {
 	
 	TetrisMain game;
-	public boolean left, right, down, rotate, pause;
+	public static boolean left, right, down, rotate, pause;
+	
+	public static boolean keyDownReleasedOneTime = true;
 	
 	public Controller(TetrisMain game){
 		this.game = game;
@@ -36,7 +38,7 @@ public class Controller implements KeyListener {
 		}
 		else if(KeyEvent.getKeyText(e.getKeyCode()).equals(Config.down)){
 			down = true;
-			if (TetrisMain.running && !TetrisMain.pause){
+			if (TetrisMain.running && !TetrisMain.pause && keyDownReleasedOneTime){
 				Action.moveShape(Config.down);
 			}
 			
@@ -65,6 +67,7 @@ public class Controller implements KeyListener {
 		}
 		else if(KeyEvent.getKeyText(e.getKeyCode()).equals(Config.down)){
 			down = false;
+			keyDownReleasedOneTime = true;
 		}
 		else if(KeyEvent.getKeyText(e.getKeyCode()).equals(Config.pause)){			
 			pause = false;
