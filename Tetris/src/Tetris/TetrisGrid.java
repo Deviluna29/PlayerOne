@@ -95,7 +95,7 @@ public class TetrisGrid {
 		for (int x = 0; x < 4; x++) {
 			for (int y = 0; y < 4; y++) {
 				if (gridView[x][y] != -1) {
-					g.drawImage(tetrisBlocks[gridView[x][y]], 272 + x * SQUARE_SIZE, 47 + y * SQUARE_SIZE,
+					g.drawImage(tetrisBlocks[gridView[x][y]], 275 + x * SQUARE_SIZE, 50 + y * SQUARE_SIZE,
 							SQUARE_SIZE, SQUARE_SIZE, null);
 				}
 			}

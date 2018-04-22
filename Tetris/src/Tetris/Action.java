@@ -18,6 +18,7 @@ public class Action {
 
 	public static int score = 0;
 	public static int totalRowsRemoved = 0;
+	public static int tetrisMade = 0;
 
 	public static ShapeData[] shapes = new ShapeData[7];
 
@@ -29,6 +30,11 @@ public class Action {
 		index_height_shape = 0;
 
 		int rowsRemoved = TetrisGrid.checkForRemoval();
+		
+		if (rowsRemoved == 4){
+			tetrisMade++;
+		}
+		
 		totalRowsRemoved += rowsRemoved;
 		score += Scoring.calculScore(rowsRemoved);
 		Scoring.calculLevel(totalRowsRemoved);
@@ -61,6 +67,8 @@ public class Action {
 		for (int y = 0; y < 4; y++) {
 			if (rowEmpty && y != 0){
 				delta++;
+			} else {
+				rowEmpty = true;
 			}
 			for (int x = 0; x < 4; x++) {
 				if (newShape.rotationStates[defaultState][x][y] == true) {
@@ -75,10 +83,19 @@ public class Action {
 			}
 		}
 
-		for (int x = 0; x < 4; x++) {
-			for (int y = 0; y < 4; y++) {
+		rowEmpty = true;
+		delta = 0;
+		
+		for (int y = 0; y < 4; y++) {
+			if (rowEmpty && y != 0){
+				delta++;
+			} else {
+				rowEmpty = true;
+			}
+			for (int x = 0; x < 4; x++) {
 				if (shapeAfter.rotationStates[defaultStateAfter][x][y] == true) {
-					TetrisGrid.gridView[x][y] = colorIndexAfter;
+					TetrisGrid.gridView[x][y - delta] = colorIndexAfter;
+					rowEmpty = false;
 				}
 			}
 		}

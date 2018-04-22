@@ -22,7 +22,7 @@ public class TetrisMain extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	// Used to set the Width and Height of the game's screen
-	public static final int WIDTH = 405, HEIGHT = 629;
+	public static final int WIDTH = 406, HEIGHT = 629;
 	public static final int WIDTH_GRID = 250, HEIGHT_GRID = 550;
 
 	private static Image[] tetrisBlocks;
@@ -177,6 +177,7 @@ public class TetrisMain extends Canvas implements Runnable {
 		tetrisGrid = new TetrisGrid(WIDTH_GRID, HEIGHT_GRID, 0, 25, tetrisBlocks);
 		Action.score = 0;
 		Action.totalRowsRemoved = 0;
+		Action.tetrisMade = 0;
 		Scoring.level = 1;
 		
 	}
@@ -189,19 +190,22 @@ public class TetrisMain extends Canvas implements Runnable {
 		g.fillRect(0, 25, WIDTH_GRID, HEIGHT_GRID);
 //		g.setColor(Color.GRAY);
 //		g.fillRect(WIDTH_GRID, 25, WIDTH - WIDTH_GRID, HEIGHT_GRID);		
-		g.drawImage(fond, WIDTH_GRID, 25, WIDTH - WIDTH_GRID, HEIGHT_GRID, null);
+		g.drawImage(fond, WIDTH_GRID, 25, WIDTH - WIDTH_GRID - 6, HEIGHT_GRID, null);
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
 		g.drawString("Tetris", 170, 20);
 		g.setColor(Color.BLACK);
-		g.setFont(new Font("Calibri", Font.PLAIN, 20));
-		g.drawString("Score: " + String.valueOf(Action.score), 300, 20);
+		g.setFont(new Font("Calibri", Font.PLAIN, 22));
+		g.drawString("Score: " + String.valueOf(Action.score), 275, 150);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
-		g.drawString("Level: " + String.valueOf(Scoring.level), 300, 120);
+		g.drawString("Level: " + String.valueOf(Scoring.level), 275, 200);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
-		g.drawString("Lignes : " + String.valueOf(Action.totalRowsRemoved), 300, 150);
+		g.drawString("Lignes : " + String.valueOf(Action.totalRowsRemoved), 275, 230);
+		g.setColor(Color.YELLOW);
+		g.setFont(new Font("Calibri", Font.PLAIN, 20));
+		g.drawString("Tétris: " + String.valueOf(Action.tetrisMade), 275, 260);
 		tetrisGrid.drawGrid(g);
 		tetrisGrid.drawGridView(g);
 		

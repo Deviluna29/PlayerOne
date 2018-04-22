@@ -9,7 +9,7 @@ public class Bot implements Runnable {
 				Action.moveShape(Config.down);
 			}
 			try {
-				Thread.sleep(1000/Scoring.level);
+				Thread.sleep(1000-(Scoring.level*45));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
