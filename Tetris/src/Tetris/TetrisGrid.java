@@ -41,8 +41,6 @@ public class TetrisGrid {
 
 		Action.invocShape(gridShape);
 
-		// int rowsRemoved = checkForRemoval();
-
 		tetrisBlocks = blocks;
 	}
 
@@ -64,7 +62,7 @@ public class TetrisGrid {
 	}
 
 	public static void checkForGameOver() {
-		TetrisMain.runnable = false;
+		TetrisMain.running = false;
 	}
 
 	private static void removeRow(int row) {
@@ -97,7 +95,7 @@ public class TetrisGrid {
 		for (int x = 0; x < 4; x++) {
 			for (int y = 0; y < 4; y++) {
 				if (gridView[x][y] != -1) {
-					g.drawImage(tetrisBlocks[gridView[x][y]], 255 + x * SQUARE_SIZE, 30 + y * SQUARE_SIZE,
+					g.drawImage(tetrisBlocks[gridView[x][y]], 272 + x * SQUARE_SIZE, 47 + y * SQUARE_SIZE,
 							SQUARE_SIZE, SQUARE_SIZE, null);
 				}
 			}

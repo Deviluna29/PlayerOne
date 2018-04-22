@@ -16,4 +16,9 @@ public class ImageLoader {
 		}
 		return images;
 	}
+	
+	public static Image loadImageFond(String path) throws IOException{
+		BufferedImage load = ImageIO.read(ImageLoader.class.getResource(path));	
+		return load;
+	}
 }

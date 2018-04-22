@@ -4,18 +4,18 @@ import java.util.Random;
 
 public class Action {
 
-	private static Random random = new Random();
-	
+	public static Random random = new Random();
+
 	public static int index_weight_shape;
 	public static int index_height_shape;
 	public static int shapeNumber;
-	public static int shapeNumberAfter = random.nextInt(6);;
-	
+	public static int shapeNumberAfter = random.nextInt(6);
+
 	public static int defaultState;
 	public static int colorIndex;
 	public static int defaultStateAfter;
 	public static int colorIndexAfter;
-	
+
 	public static int score = 0;
 	public static int totalRowsRemoved = 0;
 
@@ -24,10 +24,10 @@ public class Action {
 	public static void invocShape(int[][] grid) {
 
 		resetGridView();
-		
+
 		index_weight_shape = 3;
 		index_height_shape = 0;
-		
+
 		int rowsRemoved = TetrisGrid.checkForRemoval();
 		totalRowsRemoved += rowsRemoved;
 		score += Scoring.calculScore(rowsRemoved);
@@ -53,21 +53,38 @@ public class Action {
 
 		defaultStateAfter = shapeAfter.defaultState;
 		colorIndexAfter = shapeAfter.colorIndex;
+
+		boolean rowEmpty = true;
+		int delta = 0;
+		boolean gameOver = false;
 		
-		for (int x = 0; x < 4; x++) {
-			for (int y = 0; y < 4; y++) {
+		for (int y = 0; y < 4; y++) {
+			if (rowEmpty && y != 0){
+				delta++;
+			}
+			for (int x = 0; x < 4; x++) {
 				if (newShape.rotationStates[defaultState][x][y] == true) {
-					grid[3 + x][y] = colorIndex;
+					if (TetrisGrid.grid[3 + x][y - delta] != -1){
+						gameOver = true;
+					} else {
+						grid[3 + x][y - delta] = colorIndex;
+						rowEmpty = false;
+					}
+					
 				}
 			}
 		}
-		
+
 		for (int x = 0; x < 4; x++) {
 			for (int y = 0; y < 4; y++) {
 				if (shapeAfter.rotationStates[defaultStateAfter][x][y] == true) {
 					TetrisGrid.gridView[x][y] = colorIndexAfter;
 				}
 			}
+		}
+		
+		if (gameOver){
+			TetrisGrid.checkForGameOver();
 		}
 	}
 
@@ -121,8 +138,9 @@ public class Action {
 		boolean detectEdgeLeft = detectEdgeLeft(TetrisGrid.grid, TetrisGrid.gridShape);
 		boolean detectEdgeRight = detectEdgeRight(TetrisGrid.grid, TetrisGrid.gridShape);
 		boolean detectCollision = detectCollision(TetrisGrid.grid, TetrisGrid.gridShape);
-		
-		if (detectEdgeLeft && detectEdgeRight && detectCollision && index_weight_shape == 3 && index_height_shape == 0) {
+
+		if (key.equals(Config.down) && detectCollision && index_weight_shape == 3
+				&& index_height_shape == 0) {
 			TetrisGrid.checkForGameOver();
 		}
 
@@ -232,20 +250,20 @@ public class Action {
 		}
 		invocShape(TetrisGrid.gridShape);
 	}
-	
+
 	public static void resetGridView() {
-		for (int x = 0; x < 4; x++){
-			for (int y = 0; y < 4; y++){
+		for (int x = 0; x < 4; x++) {
+			for (int y = 0; y < 4; y++) {
 				TetrisGrid.gridView[x][y] = -1;
 			}
 		}
 	}
-	
-	public static void pauseGame(){
-		if (TetrisMain.running){
-			TetrisMain.running = false;
+
+	public static void pauseGame() {
+		if (TetrisMain.pause) {
+			TetrisMain.pause = false;
 		} else {
-			TetrisMain.running = true;
+			TetrisMain.pause = true;
 		}
 	}
 }

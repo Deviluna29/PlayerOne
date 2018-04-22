@@ -26,11 +26,13 @@ public class TetrisMain extends Canvas implements Runnable {
 	public static final int WIDTH_GRID = 250, HEIGHT_GRID = 550;
 
 	private static Image[] tetrisBlocks;
+	private static Image fond;
 
 	Controller control;
 
 	private static TetrisGrid tetrisGrid;
 
+	public static boolean pause = false;
 	public static boolean running = true;
 	public static boolean runnable = true;
 
@@ -159,12 +161,24 @@ public class TetrisMain extends Canvas implements Runnable {
 			System.out.println("Error loading in tetris.png");
 			System.exit(1);
 		}
+		
+		try {
+			fond = ImageLoader.loadImageFond("/fondMenuDroite.png");
+		} catch (IOException e) {
+			System.out.println("Error loading in fondMenuDroite.png");
+			System.exit(1);
+		}
 		tetrisGrid = new TetrisGrid(WIDTH_GRID, HEIGHT_GRID, 0, 25, tetrisBlocks);
 	}
 	
 	public static void newGame() {
+		TetrisMain.running = true;
+		Action.shapeNumberAfter = Action.random.nextInt(6);
 		tetrisGrid = new TetrisGrid(WIDTH_GRID, HEIGHT_GRID, 0, 25, tetrisBlocks);
 		Action.score = 0;
+		Action.totalRowsRemoved = 0;
+		Scoring.level = 1;
+		
 	}
 
 	private void render(Graphics2D g) {
@@ -173,8 +187,9 @@ public class TetrisMain extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, 25);		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 25, WIDTH_GRID, HEIGHT_GRID);
-		g.setColor(Color.GRAY);
-		g.fillRect(WIDTH_GRID, 25, WIDTH - WIDTH_GRID, HEIGHT_GRID);		
+//		g.setColor(Color.GRAY);
+//		g.fillRect(WIDTH_GRID, 25, WIDTH - WIDTH_GRID, HEIGHT_GRID);		
+		g.drawImage(fond, WIDTH_GRID, 25, WIDTH - WIDTH_GRID, HEIGHT_GRID, null);
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
 		g.drawString("Tetris", 170, 20);

@@ -5,11 +5,11 @@ public class Bot implements Runnable {
 	@Override
 	public void run() {
 		while (TetrisMain.runnable) {
-			if (TetrisMain.running) {
+			if (TetrisMain.running && !TetrisMain.pause) {
 				Action.moveShape(Config.down);
 			}
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(1000/Scoring.level);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
