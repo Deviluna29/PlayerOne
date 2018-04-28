@@ -27,6 +27,7 @@ public class TetrisMain extends Canvas implements Runnable {
 
 	private static Image[] tetrisBlocks;
 	private static Image fond;
+	private static Image pauseImage;
 
 	Controller control;
 
@@ -168,6 +169,13 @@ public class TetrisMain extends Canvas implements Runnable {
 			System.out.println("Error loading in fondMenuDroite.png");
 			System.exit(1);
 		}
+		
+		try {
+			pauseImage = ImageLoader.loadImageFond("/pauseImage.png");
+		} catch (Exception e) {
+			System.out.println("Error loading in pauseImage.png");
+			System.exit(1);
+		}
 		tetrisGrid = new TetrisGrid(WIDTH_GRID, HEIGHT_GRID, 0, 25, tetrisBlocks);
 	}
 	
@@ -189,8 +197,11 @@ public class TetrisMain extends Canvas implements Runnable {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 25, WIDTH_GRID, HEIGHT_GRID);
 //		g.setColor(Color.GRAY);
-//		g.fillRect(WIDTH_GRID, 25, WIDTH - WIDTH_GRID, HEIGHT_GRID);		
+//		g.fillRect(WIDTH_GRID, 25, WIDTH - WIDTH_GRID, HEIGHT_GRID);
+		
+		//Draw the backScreen on the right		
 		g.drawImage(fond, WIDTH_GRID, 25, WIDTH - WIDTH_GRID - 6, HEIGHT_GRID, null);
+		
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
 		g.drawString("Tetris", 170, 20);
@@ -208,6 +219,11 @@ public class TetrisMain extends Canvas implements Runnable {
 		g.drawString("Tétris: " + String.valueOf(Action.tetrisMade), 275, 260);
 		tetrisGrid.drawGrid(g);
 		tetrisGrid.drawGridView(g);
+				
+		//Draw the pause Image
+		if (pause){
+			g.drawImage(pauseImage, 75, 225, 100, 100, null);
+		}
 		
 	}
 }
