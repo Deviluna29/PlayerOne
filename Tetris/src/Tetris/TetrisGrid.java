@@ -2,29 +2,65 @@ package Tetris;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.io.IOException;
 
 public class TetrisGrid {
 
+	// Parameters to initialize the grids.
 	public static int width, height, widthOff, heightOff;
-	// -1 means empty, 0-6 is draw a block
-	public static int[][] grid;
-	public static int[][] gridShape;
-	public static int[][] gridView;
-	public static int[][] gridRotation;
-
 	private int SQUARE_SIZE = 25;
 	private Image[] tetrisBlocks;
+	
+	/*
+	 * The following grid are superposed like layers sheet, to draw the final grid.
+	 *   
+	 *  
+	 *  -1 means empty, 0-6 is draw a block
+	 */
+	
+	// Principal grid
+	public static int[][] grid;
+	
+	// Grid used for the actual moving shape.
+	public static int[][] gridShape;
+	
+	// Grid used to see the next shape to come.
+	public static int[][] gridView;
+	
+	// Grid used to rotate (if possible) the actual moving shape.
+	public static int[][] gridRotation;	
 
-	public TetrisGrid(int width, int height, int wOff, int hOff, Image[] blocks) {
+	/**
+	 * Constructor of the grids.
+	 * 
+	 * @param width
+	 * 		Width of the game area.
+	 * @param height
+	 * 		Height of the game area.
+	 * @param wOff
+	 * 
+	 * @param hOff
+	 * 
+	 * @param blocks
+	 * 		Array of subImages, that represent blocks.
+	 * @throws IOException 
+	 */
+	public TetrisGrid(int width, int height, int wOff, int hOff, Image[] blocks) throws IOException {
 
+		// Initialize parameters.
 		widthOff = wOff;
 		heightOff = hOff;
 		TetrisGrid.width = width / SQUARE_SIZE;
 		TetrisGrid.height = height / SQUARE_SIZE;
+		tetrisBlocks = blocks;
+		
+		// Initialize the different grids size.
 		grid = new int[TetrisGrid.width][TetrisGrid.height];
 		gridShape = new int[TetrisGrid.width][TetrisGrid.height];
 		gridView = new int[4][4];
 		gridRotation = new int[TetrisGrid.width][TetrisGrid.height];
+		
+		// Fill the grids with empty blocks everywhere.
 		for (int x = 0; x < TetrisGrid.width; x++) {
 			for (int y = 0; y < TetrisGrid.height; y++) {
 				grid[x][y] = -1;
@@ -39,44 +75,15 @@ public class TetrisGrid {
 			}
 		}
 
-		Action.invocShape(gridShape);
+		// Invoke the first shape.
+		Action.invocShape(gridShape);		
+	}		
 
-		tetrisBlocks = blocks;
-	}
-
-	public static int checkForRemoval() {
-		int rowsRemoved = 0;
-		for (int y = 0; y < height; y++) {
-			boolean isRowFull = true;
-			for (int x = 0; x < width; x++) {
-				if (grid[x][y] == -1) {
-					isRowFull = false;
-				}
-			}
-			if (isRowFull) {
-				removeRow(y);
-				rowsRemoved++;
-			}
-		}
-		return rowsRemoved;
-	}
-
-	public static void checkForGameOver() {
-		TetrisMain.running = false;
-	}
-
-	private static void removeRow(int row) {
-		for (int x = 0; x < width; x++) {
-			for (int y = row; y > 0; y--) {
-				grid[x][y] = grid[x][y - 1];
-			}
-		}
-
-		for (int x = 0; x < width; x++) {
-			grid[x][0] = -1;
-		}
-	}
-
+	/**
+	 * Draw the principal Grid.
+	 * 
+	 * @param g
+	 */
 	public void drawGrid(Graphics2D g) {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
@@ -91,6 +98,11 @@ public class TetrisGrid {
 		}
 	}
 
+	/**
+	 * Draw the Grid view used to see the next shape to come.
+	 * 
+	 * @param g
+	 */
 	public void drawGridView(Graphics2D g) {
 		for (int x = 0; x < 4; x++) {
 			for (int y = 0; y < 4; y++) {
