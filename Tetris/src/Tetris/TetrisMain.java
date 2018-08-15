@@ -27,8 +27,8 @@ public class TetrisMain extends Canvas implements Runnable {
 	// Used to set the Width and Height of the game area.
 	public static final int WIDTH_GRID = 250, HEIGHT_GRID = 550;
 
-	private static Image[] tetrisBlocks;
-	private static Image fond;
+	public static Image[] tetrisBlocks;
+	public static Image fond;
 	private static Image pauseImage;
 
 	Controller control;
@@ -131,6 +131,13 @@ public class TetrisMain extends Canvas implements Runnable {
 				System.exit(0);
 			}
 		});
+		
+		JMenuItem theme = new JMenuItem("Theme");
+		theme.addActionListener(new ActionListener() {			
+			public void actionPerformed(ActionEvent e) {				
+				Theme.openTheme(frame);						
+			}
+		});
 
 		JMenuItem options = new JMenuItem("Options");
 		options.addActionListener(new ActionListener() {
@@ -147,6 +154,7 @@ public class TetrisMain extends Canvas implements Runnable {
 		menuFile.add(newGame);
 		menuFile.add(highScore);
 		menuFile.add(options);
+		menuFile.add(theme);
 		menuFile.add(exit);
 		bar.add(menuFile);
 		frame.add(bar);

@@ -9,7 +9,7 @@ public class TetrisGrid {
 	// Parameters to initialize the grids.
 	public static int width, height, widthOff, heightOff;
 	private int SQUARE_SIZE = 25;
-	private Image[] tetrisBlocks;
+	public static Image[] tetrisBlocks;
 	
 	/*
 	 * The following grid are superposed like layers sheet, to draw the final grid.
