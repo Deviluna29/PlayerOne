@@ -9,19 +9,24 @@ import javax.swing.JFrame;
 
 public class Theme {
 	
-	
+	/**
+	 * Open the Them window, to change graphics game
+	 * 
+	 * @param frame
+	 * 		The frame from which the theme window is related.
+	 */
 	public static void openTheme(JFrame frame){	
 	// Construction of the theme windows.
-			final JFrame options = new JFrame("Options");
-			options.setSize(200, 400);
-			options.setResizable(false);
-			options.setLocationRelativeTo(frame);
-			options.setLayout(null);
+			final JFrame theme = new JFrame("Options");
+			theme.setSize(200, 400);
+			theme.setResizable(false);
+			theme.setLocationRelativeTo(frame);
+			theme.setLayout(null);
 			
 			// Set themes button to change the theme.
 			JButton theme1 = new JButton("Theme 1");
 			theme1.setBounds(50, 50, 100, 30);
-theme1.addActionListener(new ActionListener() {
+			theme1.addActionListener(new ActionListener() {
 				
 				public void actionPerformed(ActionEvent arg0) {
 					try {
@@ -59,15 +64,15 @@ theme1.addActionListener(new ActionListener() {
 			done.setBounds(50, 290, 100, 30);
 			done.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
-					options.dispose();		
+					theme.dispose();		
 				}
 			});
 			
-			options.add(theme1);
-			options.add(theme2);
-			options.add(theme3);
-			options.add(done);
-			options.setVisible(true);
+			theme.add(theme1);
+			theme.add(theme2);
+			theme.add(theme3);
+			theme.add(done);
+			theme.setVisible(true);
 	}
 	
 	private static void changeTheme() {
