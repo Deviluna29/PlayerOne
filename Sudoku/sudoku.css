@@ -1,0 +1,25 @@
+tbody,
+colgroup {
+    border: 2px solid #000000;
+}
+
+td {
+    border: 1px solid #000000;
+    vertical-align: middle;
+}
+
+input {
+    color: #000000;
+    padding: 0;
+    border: 0;
+    text-align: center;
+    width: 48px;
+    height: 48px;
+    font-size: 30px;
+    background-color: #FFFFFF;
+    outline: none;
+}
+
+input:disabled {
+    background-color: #EEEEEE;
+}
