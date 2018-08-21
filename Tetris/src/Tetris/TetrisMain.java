@@ -211,7 +211,7 @@ public class TetrisMain extends Canvas implements Runnable {
 		this.addKeyListener(control);
 		requestFocus();
 		try {
-			tetrisBlocks = ImageLoader.loadImage("/tetris.png", 25);
+			tetrisBlocks = ImageLoader.loadImage("g/tetris.png", 25);
 		} catch (IOException e) {
 			System.out.println("Error loading in tetris.png");
 			System.exit(1);
