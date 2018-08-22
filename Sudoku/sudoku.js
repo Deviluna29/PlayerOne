@@ -1,4 +1,4 @@
-// Sudoku array initialization
+// Sudoku initialization
 var sudoku = new Array(9);
 
 for (var i = 0; i < sudoku.length; i++) {
@@ -12,7 +12,7 @@ for (var i = 0; i < sudokuShuffled.length; i++) {
     sudokuShuffled[i] = new Array(9);
 }
 
-// Samples array initialization
+// Samples initialization
 var sampleNumbers = new Array(9);
 var sampleGridSize = new Array(9);
 
@@ -50,6 +50,7 @@ function fillSudoku() {
                 var number = sampleNumbers[random];
                 if (checkRow(j, i, number) && checkCol(j, i, number) && checkBox(j, i, number)) {
                     sudoku[i][j] = number;
+                    sudokuShuffled[i][j] = number;
                     caseFilled = true;
                 }
                 sampleNumbers.splice(random, 1);
@@ -128,8 +129,7 @@ function checkBox(x, y, number) {
     return true;
 }
 
-function shuffleSudoku(difficulty, sudoku) {
-    this.sudokuShuffled = sudoku;
+function shuffleSudoku(difficulty) {
     var randomFound = false;
     for (var h = 0; h < difficulty; h++) {
         var randomFound = false;
@@ -146,7 +146,26 @@ function shuffleSudoku(difficulty, sudoku) {
 }
 
 fillSampleGridSize();
-shuffleSudoku(65, sudoku);
+console.log(sudoku);
+shuffleSudoku(49);
+
+function resolveSudoku() {
+    console.log(sudokuShuffled);
+    console.log(sudoku);
+    for (var i = 0; i < 9; i++) {
+        for (var j = 0; j < 9; j++) {
+            var col = j + 1;
+            var row = i + 1;
+            var id = "col" + col + "_" + "row" + row;
+            document.getElementById(id).setAttribute("value", sudoku[i][j]);
+            if (sudoku[i][j] != sudokuShuffled[i][j]) {
+                document.getElementById(id).setAttribute("class", "resolved");
+            } else {
+                document.getElementById(id).setAttribute("disabled", true);
+            }
+        }
+    }
+}
 
 // Modify the DOM to display the sudoku
 for (var i = 0; i < 9; i++) {

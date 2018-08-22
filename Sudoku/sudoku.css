@@ -23,3 +23,7 @@ input {
 input:disabled {
     background-color: #EEEEEE;
 }
+
+.resolved {
+    background-color: green;
+}
