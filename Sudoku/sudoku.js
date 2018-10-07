@@ -146,18 +146,15 @@ function shuffleSudoku(difficulty) {
 }
 
 fillSampleGridSize();
-console.log(sudoku);
-shuffleSudoku(49);
+shuffleSudoku(39);
 
 function resolveSudoku() {
-    console.log(sudokuShuffled);
-    console.log(sudoku);
     for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
             var col = j + 1;
             var row = i + 1;
             var id = "col" + col + "_" + "row" + row;
-            document.getElementById(id).setAttribute("value", sudoku[i][j]);
+            document.getElementById(id).value = sudoku[i][j];
             if (sudoku[i][j] != sudokuShuffled[i][j]) {
                 document.getElementById(id).setAttribute("class", "resolved");
             } else {
@@ -167,13 +164,34 @@ function resolveSudoku() {
     }
 }
 
+function checkSudoku() {
+    for (var i = 0; i < 9; i++) {
+        for (var j = 0; j < 9; j++) {
+            var col = j + 1;
+            var row = i + 1;
+            var id = "col" + col + "_" + "row" + row;
+            var value = document.getElementById(id).value;
+            if (value == "") {
+                document.getElementById(id).setAttribute("class", "missing");
+            } else if (value == sudokuShuffled[i][j]) {
+                document.getElementById(id).setAttribute("disabled", true);
+            } else if (value == sudoku[i][j]) {
+                document.getElementById(id).setAttribute("class", "resolved");
+            } else {
+                document.getElementById(id).setAttribute("class", "wrong");
+            }
+        }
+    }
+    var value = document.getElementById(id).value;
+}
+
 // Modify the DOM to display the sudoku
 for (var i = 0; i < 9; i++) {
     for (var j = 0; j < 9; j++) {
         var col = j + 1;
         var row = i + 1;
         var id = "col" + col + "_" + "row" + row;
-        document.getElementById(id).setAttribute("value", sudokuShuffled[i][j]);
+        document.getElementById(id).value = sudokuShuffled[i][j];
         if (sudokuShuffled[i][j] != "") {
             document.getElementById(id).setAttribute("disabled", true);
         }

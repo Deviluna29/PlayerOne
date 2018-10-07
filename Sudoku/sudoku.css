@@ -27,3 +27,11 @@ input:disabled {
 .resolved {
     background-color: green;
 }
+
+.missing {
+    background-color: orange;
+}
+
+.wrong {
+    background-color: red;
+}
